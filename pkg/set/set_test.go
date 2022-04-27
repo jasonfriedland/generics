@@ -9,41 +9,45 @@ import (
 func TestSet(t *testing.T) {
 	// String test
 	t.Run("Set, string", func(t *testing.T) {
+		assert := assert.New(t)
 		s := New[string]()
 
 		s.Add("hello")
 		s.Add("hello")
-		assert.Equal(t, s.Len(), 1)
-		assert.Equal(t, s.In("hello"), true)
+		assert.Equal(s.Len(), 1)
+		assert.Equal(s.In("hello"), true)
 
 		s.Add("foo")
 		s.Add("bar")
-		assert.Equal(t, s.Len(), 3)
-		assert.Equal(t, s.In("hello") && s.In("foo") && s.In("bar"), true)
+		assert.Equal(s.Len(), 3)
+		assert.Equal(s.In("hello") && s.In("foo") && s.In("bar"), true)
 
 		s.Del("hello")
-		assert.Equal(t, s.Len(), 2)
-		assert.Equal(t, s.In("hello"), false)
+		assert.Equal(s.Len(), 2)
+		assert.Equal(s.In("hello"), false)
 	})
 	// Int test
 	t.Run("Set, int", func(t *testing.T) {
+		assert := assert.New(t)
 		s := New[int]()
+
 		s.Add(123)
 		s.Add(123)
-		assert.Equal(t, s.Len(), 1)
-		assert.Equal(t, s.In(123), true)
+		assert.Equal(s.Len(), 1)
+		assert.Equal(s.In(123), true)
 
 		s.Add(456)
 		s.Add(789)
-		assert.Equal(t, s.Len(), 3)
-		assert.Equal(t, s.In(123) && s.In(456) && s.In(789), true)
+		assert.Equal(s.Len(), 3)
+		assert.Equal(s.In(123) && s.In(456) && s.In(789), true)
 
 		s.Del(123)
-		assert.Equal(t, s.Len(), 2)
-		assert.Equal(t, s.In(123), false)
+		assert.Equal(s.Len(), 2)
+		assert.Equal(s.In(123), false)
 	})
 	// Struct test
 	t.Run("Set, struct", func(t *testing.T) {
+		assert := assert.New(t)
 		type tmp struct {
 			s string
 			f float64
@@ -53,17 +57,17 @@ func TestSet(t *testing.T) {
 
 		s.Add(tmp{"hello", 12.0, true})
 		s.Add(tmp{"hello", 12.0, true})
-		assert.Equal(t, s.Len(), 1)
-		assert.Equal(t, s.In(tmp{"hello", 12.0, true}), true)
+		assert.Equal(s.Len(), 1)
+		assert.Equal(s.In(tmp{"hello", 12.0, true}), true)
 
 		s.Add(tmp{"goodbye", 3.14159, false})
 		s.Add(tmp{"hello", 12.0, false})
-		assert.Equal(t, s.In(tmp{"hello", 12.0, true}) &&
+		assert.Equal(s.In(tmp{"hello", 12.0, true}) &&
 			s.In(tmp{"goodbye", 3.14159, false}) &&
 			s.In(tmp{"hello", 12.0, false}), true)
 
 		s.Del(tmp{"hello", 12.0, true})
-		assert.Equal(t, s.In(tmp{"hello", 12.0, true}), false)
+		assert.Equal(s.In(tmp{"hello", 12.0, true}), false)
 	})
 }
 
