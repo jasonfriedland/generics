@@ -2,11 +2,11 @@ all:
 .PHONY: all
 
 test:
-	go test -cover ./...
+	go test -v -race -cover -covermode=atomic ./...
 .PHONY: test
 
 bench:
-	go test -cover -benchmem -bench ^Benchmark ./...
+	go test -benchmem -bench ^Benchmark ./...
 .PHONY: bench
 
 lint:
